@@ -1,0 +1,14 @@
+com/elementary/mx/elementary/model/Grade.class
+com/elementary/mx/elementary/model/Student.class
+com/elementary/mx/elementary/model/record/StudentRecord.class
+com/elementary/mx/elementary/controller/StudentController.class
+com/elementary/mx/elementary/repository/SubjectRepository.class
+com/elementary/mx/elementary/repository/ScoreRepository.class
+com/elementary/mx/elementary/repository/StudentRepository.class
+com/elementary/mx/elementary/model/Subject.class
+com/elementary/mx/elementary/repository/mapper/StudentMapper.class
+com/elementary/mx/elementary/model/DTO/StudentDTO.class
+com/elementary/mx/elementary/model/record/SubjectRecord.class
+com/elementary/mx/elementary/model/Score.class
+com/elementary/mx/elementary/service/StudentService.class
+com/elementary/mx/elementary/ElementaryApplication.class

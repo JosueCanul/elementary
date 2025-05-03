@@ -1,0 +1,14 @@
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/ElementaryApplication.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/controller/StudentController.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/model/DTO/StudentDTO.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/model/Grade.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/model/Score.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/model/Student.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/model/Subject.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/model/record/StudentRecord.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/model/record/SubjectRecord.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/repository/ScoreRepository.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/repository/StudentRepository.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/repository/SubjectRepository.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/repository/mapper/StudentMapper.java
+/home/json/Proyectos/elementary/src/main/java/com/elementary/mx/elementary/service/StudentService.java

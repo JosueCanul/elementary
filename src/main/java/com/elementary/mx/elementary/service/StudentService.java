@@ -1,31 +1,35 @@
 package com.elementary.mx.elementary.service;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.elementary.mx.elementary.DTO.StudentDTO;
+import com.elementary.mx.elementary.mapper.StudentMapper;
 import com.elementary.mx.elementary.model.Student;
-import com.elementary.mx.elementary.model.DTO.CreateStudentDTO;
 import com.elementary.mx.elementary.repository.StudentRepository;
-import com.elementary.mx.elementary.repository.mapper.StudentMapper;
+
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class StudentService {
 
-    private final StudentRepository studentRepository;
+    @Autowired
+    private StudentRepository studentRepository;
     
-    private final StudentMapper studentMapper;
+    @Autowired
+    private StudentMapper studentMapper;
 
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
-        this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
+    public Student findStudentById(String enrollment) throws EntityNotFoundException{
+        return this.studentRepository
+                .findById(enrollment)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
-    public Student findStudentById(String enrollment) throws Exception{
-        return studentRepository.findById(enrollment).orElseThrow();
-    }
-
-    public Student saveStudent(Student student){
+    public Student createStudent(StudentDTO studentDTO){
+        Student student = new Student();
+        this.studentMapper.updateStudentFromRecord(studentDTO, student);
         return this.studentRepository.save(student);
     }
 
@@ -33,21 +37,17 @@ public class StudentService {
         this.studentRepository.deleteById(enrollment);
     }
 
-    public void updateStudent(Student student) {
-        Student studentToSave = this.studentRepository.findById(student.getEnrolment())
+    public Student updateStudent(StudentDTO studentDTO, String enrollment) throws EntityNotFoundException{
+
+        Student studentToSave = this.studentRepository.findById(enrollment)
             .map(s -> {
-                this.studentMapper.updateStudentFromRecord(student, s);
+                this.studentMapper.updateStudentFromRecord(studentDTO, s);
                 return s;
-            })
-            .orElse(student);
-        this.studentRepository.save(studentToSave);
+            }).orElseThrow(EntityNotFoundException::new);
+        return this.studentRepository.save(studentToSave);
     }
 
-    public List<Student> listStudents(){
+    public List<Student> findAllStudents(){
         return this.studentRepository.findAll();
-    }
-
-    public void createStudent(CreateStudentDTO data){
-        // LLAMA AL REPOSITORIO Y CREA EL ESTUDIANTE
     }
 }

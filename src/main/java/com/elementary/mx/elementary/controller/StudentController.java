@@ -1,9 +1,11 @@
 package com.elementary.mx.elementary.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,44 +16,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.elementary.mx.elementary.DTO.StudentDTO;
 import com.elementary.mx.elementary.model.Student;
-import com.elementary.mx.elementary.model.DTO.CreateStudentDTO;
 import com.elementary.mx.elementary.service.StudentService;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 
 
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
-    @GetMapping()
-    public List<Student> findAll(){
-        return studentService.listStudents();
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> findStudentById(@PathVariable String id){
+        Student student = studentService.findStudentById(id);
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<Student>> findAllStudents(){
+        List<Student> students = this.studentService.findAllStudents();
+        return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
     }
 
-    // @GetMapping("/perfíl/{id}")
-    // public Student findStudent(@PathVariable String id){
-    //     return studentService
-    // }
-    @PutMapping()
-    public void updateStudent(@RequestBody Student student) {
-        studentService.updateStudent(student);
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@Valid @RequestBody StudentDTO studentDTO, @PathVariable String id) {
+        Student student = studentService.updateStudent(studentDTO, id);
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteStudentById(@PathVariable String id){
         studentService.deleteStudentById(id);
     }
 
-    @PostMapping("/student")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createVehicle(@Valid @RequestBody CreateStudentDTO data){
-        studentService.createStudent(data);
+    @PostMapping
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentDTO data){
+        Student student = studentService.createStudent(data);
+        return new ResponseEntity<Student>(student, HttpStatus.CREATED);
     }
 }

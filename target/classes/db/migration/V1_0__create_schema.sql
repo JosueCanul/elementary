@@ -2,13 +2,14 @@ CREATE TABLE IF NOT EXISTS student_table (
     enrollment char(10) NOT NULL,
     student_name varchar(50) NOT NULL,
     last_name varchar(50) NOT NULL,
+    email varchar (255) NOT NULL,
     grade varchar(50) NOT NULL DEFAULT 'FIRST',
     PRIMARY KEY (enrollment)
 )ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS subject_table (
     subject_name varchar(150),
-    descripcion varchar(200),
+    description varchar(200),
     grade varchar(50),
     PRIMARY KEY (subject_name)
 )ENGINE=INNODB;

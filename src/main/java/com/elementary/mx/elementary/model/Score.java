@@ -46,5 +46,5 @@ public class Score {
 
     @Column(name = "final_date")
     @Temporal(TemporalType.DATE)
-    private Date enDate;
+    private Date endDate;
 }

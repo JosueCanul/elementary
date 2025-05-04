@@ -30,6 +30,12 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+    
+    @PostMapping
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentDTO data){
+        Student student = studentService.createStudent(data);
+        return new ResponseEntity<Student>(student, HttpStatus.CREATED);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> findStudentById(@PathVariable String id){
@@ -44,8 +50,8 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@Valid @RequestBody StudentDTO studentDTO, @PathVariable String id) {
-        Student student = studentService.updateStudent(studentDTO, id);
+    public ResponseEntity<Student> updateStudent(@PathVariable String id, @Valid @RequestBody StudentDTO studentDTO) {
+        Student student = studentService.updateStudent(id, studentDTO);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
     
@@ -55,9 +61,4 @@ public class StudentController {
         studentService.deleteStudentById(id);
     }
 
-    @PostMapping
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentDTO data){
-        Student student = studentService.createStudent(data);
-        return new ResponseEntity<Student>(student, HttpStatus.CREATED);
-    }
 }

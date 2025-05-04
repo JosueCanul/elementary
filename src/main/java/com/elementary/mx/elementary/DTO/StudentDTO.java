@@ -4,6 +4,7 @@ import com.elementary.mx.elementary.model.Grade;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record StudentDTO(
@@ -14,7 +15,7 @@ public record StudentDTO(
     String name,
     @NotBlank
     String lastName,
-    @NotBlank
+    @NotNull
     Grade grade,
     @NotBlank
     @Email

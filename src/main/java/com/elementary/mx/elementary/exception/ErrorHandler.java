@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import jakarta.persistence.EntityNotFoundException;
 
 @RestControllerAdvice
+@SuppressWarnings("")
 public class ErrorHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -15,4 +16,10 @@ public class ErrorHandler {
     public void handleError404(){
         System.out.println("Content not found");
     }
+
+    @ExceptionHandler(IncompatibleGradeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void handleError400(){
+    }
+
 }

@@ -20,6 +20,7 @@ import com.elementary.mx.elementary.DTO.ScoreDTO;
 import com.elementary.mx.elementary.model.Score;
 import com.elementary.mx.elementary.service.ScoreService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -36,26 +37,26 @@ public class ScoreController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Score> findScoreById(@RequestParam int id){
+    public ResponseEntity<Score> findScoreById(@RequestParam int id) throws EntityNotFoundException{
         Score score = this.scoreService.findScoreById(id);
         return new ResponseEntity<Score>(score, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Score>> findAllScores(){
+    public ResponseEntity<List<Score>> findAllScores() throws EntityNotFoundException{
         List<Score> scores = this.scoreService.findAll();
         return new ResponseEntity<List<Score>>(scores, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Score> updateScore(@PathVariable int id, @Valid @RequestBody ScoreDTO scoreDTO){
+    public ResponseEntity<Score> updateScore(@PathVariable int id, @Valid @RequestBody ScoreDTO scoreDTO) throws EntityNotFoundException{
         Score score = this.scoreService.updateScore(id, scoreDTO);
         return new ResponseEntity<Score>(score, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteScore(int id){
+    public void deleteScore(@PathVariable int id) throws EntityNotFoundException{
         this.scoreService.deleteScoreById(id);
     }
 

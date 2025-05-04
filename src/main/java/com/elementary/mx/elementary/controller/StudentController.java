@@ -20,6 +20,7 @@ import com.elementary.mx.elementary.DTO.StudentDTO;
 import com.elementary.mx.elementary.model.Student;
 import com.elementary.mx.elementary.service.StudentService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 
@@ -32,32 +33,32 @@ public class StudentController {
     private StudentService studentService;
     
     @PostMapping
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentDTO data){
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentDTO data) {
         Student student = studentService.createStudent(data);
         return new ResponseEntity<Student>(student, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> findStudentById(@PathVariable String id){
+    public ResponseEntity<Student> findStudentById(@PathVariable String id) throws EntityNotFoundException{
         Student student = studentService.findStudentById(id);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
     
     @GetMapping
-    public ResponseEntity<List<Student>> findAllStudents(){
+    public ResponseEntity<List<Student>> findAllStudents() {
         List<Student> students = this.studentService.findAllStudents();
         return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable String id, @Valid @RequestBody StudentDTO studentDTO) {
+    public ResponseEntity<Student> updateStudent(@PathVariable String id, @Valid @RequestBody StudentDTO studentDTO) throws EntityNotFoundException{
         Student student = studentService.updateStudent(id, studentDTO);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteStudentById(@PathVariable String id){
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteStudentById(@PathVariable String id) throws EntityNotFoundException{
         studentService.deleteStudentById(id);
     }
 

@@ -19,6 +19,7 @@ import com.elementary.mx.elementary.DTO.SubjectDTO;
 import com.elementary.mx.elementary.model.Subject;
 import com.elementary.mx.elementary.service.SubjectService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -35,7 +36,7 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subject> findSubjectById(@PathVariable String id){
+    public ResponseEntity<Subject> findSubjectById(@PathVariable String id) throws EntityNotFoundException{
         Subject subject = this.subjectService.findSubjectById(id);
         return new ResponseEntity<Subject>(subject, HttpStatus.OK);
     }
@@ -54,7 +55,7 @@ public class SubjectController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteSubjectById(@PathVariable String id){
+    public void deleteSubjectById(@PathVariable String id) throws EntityNotFoundException{
         this.subjectService.deleteSubjectById(id);
     }
 }

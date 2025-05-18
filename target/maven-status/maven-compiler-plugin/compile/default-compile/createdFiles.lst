@@ -10,10 +10,11 @@ com/elementary/mx/elementary/DTO/create/ScoreCreateDTO.class
 com/elementary/mx/elementary/exception/ErrorHandler.class
 com/elementary/mx/elementary/ElementaryApplication.class
 com/elementary/mx/elementary/DTO/body/StudentBodyDTO.class
-com/elementary/mx/elementary/DTO/create/SubjectCreateDTO.class
-com/elementary/mx/elementary/DTO/create/StudentCreateDTO.class
+com/elementary/mx/elementary/DTO/update/SubjectUpdateDTO.class
+com/elementary/mx/elementary/DTO/update/StudentUpdateDTO.class
 com/elementary/mx/elementary/mapper/StudentMapper.class
 com/elementary/mx/elementary/DTO/body/SubjectBodyDTO.class
+com/elementary/mx/elementary/DTO/update/ScoreUpdateDTO.class
 com/elementary/mx/elementary/mapper/ScoreMapper.class
 com/elementary/mx/elementary/controller/ScoreController.class
 com/elementary/mx/elementary/repository/SubjectRepository.class

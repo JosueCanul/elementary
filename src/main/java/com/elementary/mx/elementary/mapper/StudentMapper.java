@@ -12,8 +12,8 @@ import com.elementary.mx.elementary.model.Student;
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void mapStudentFromBodyRecord(StudentBodyDTO dto, @MappingTarget Student student);
+    public void mapStudentFromBodyRecord(StudentBodyDTO dto, @MappingTarget Student student);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void mapStudentFromUpdateRecord(StudentUpdateDTO dto, @MappingTarget Student student);
+    public void mapStudentFromUpdateRecord(StudentUpdateDTO dto, @MappingTarget Student student);
 }

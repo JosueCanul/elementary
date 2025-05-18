@@ -6,19 +6,27 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record StudentBodyDTO(
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class StudentBodyDTO{
     @NotBlank
     @Size(min = 10, max = 10)
-    String enrollment,
+    String enrollment;
     @NotBlank
     @Size(min = 3, max = 20)
-    String name,
+    String name;
     @NotBlank
-    String lastName,
+    String lastName;
     @NotNull
-    Grade grade,
+    Grade grade;
     @NotBlank
     @Email
-    String email)
-{}
+    String email;
+}

@@ -33,19 +33,16 @@ public class ScoreService {
     private SubjectService subjectService;
 
     public Score createScore(ScoreBodyDTO scoreDTO){
-        Student student = this.studentService.findStudentById(scoreDTO.enrollment());
-        Subject subject = this.subjectService.findSubjectById(scoreDTO.subjectName());
+        Student student = this.studentService.findStudentById(scoreDTO.getEnrollment());
+        Subject subject = this.subjectService.findSubjectById(scoreDTO.getSubjectName());
         
         if (!student.getGrade().equals(subject.getGrade())) {
             throw new IncompatibleGradeException();
         }
             
-        ScoreCreateDTO scoreCreateDTO = new ScoreCreateDTO(null, 
-                                                            student, 
-                                                            subject, 
-                                                            scoreDTO.score(), 
-                                                            scoreDTO.startDate(), 
-                                                            scoreDTO.endDate());
+        ScoreCreateDTO scoreCreateDTO = new ScoreCreateDTO(
+            null, student, subject, scoreDTO.getScore(), scoreDTO.getStartDate(), scoreDTO.getEndDate()
+        );
         Score score = new Score();
         this.scoreMapper.updateScoreFromRecord(scoreCreateDTO, score);
         return this.scoreRepository.save(score);
@@ -62,15 +59,12 @@ public class ScoreService {
     }
 
     public Score updateScore(int id, ScoreUpdateDTO scoreDTO){
-        Student student = this.studentService.findStudentById(scoreDTO.enrollment());
-        Subject subject = this.subjectService.findSubjectById(scoreDTO.subjectName());
+        Student student = this.studentService.findStudentById(scoreDTO.getEnrollment());
+        Subject subject = this.subjectService.findSubjectById(scoreDTO.getSubjectName());
         Score score = this.findScoreById(id);
-        ScoreCreateDTO scoreCreateDTO = new ScoreCreateDTO(null, 
-                                                            student, 
-                                                            subject, 
-                                                            scoreDTO.score(), 
-                                                            scoreDTO.startDate(), 
-                                                            scoreDTO.endDate());
+        ScoreCreateDTO scoreCreateDTO = new ScoreCreateDTO(
+            null, student, subject, scoreDTO.getScore(), scoreDTO.getStartDate(), scoreDTO.getEndDate()
+        );
         this.scoreMapper.updateScoreFromRecord(scoreCreateDTO, score);
         return this.scoreRepository.save(score);
     }

@@ -12,10 +12,10 @@ import com.elementary.mx.elementary.model.Subject;
 @Mapper(componentModel = "spring")
 public interface SubjectMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void mapSubjectFromBodyRecord(SubjectBodyDTO dto, @MappingTarget Subject subject);
+    public void mapSubjectFromBodyRecord(SubjectBodyDTO dto, @MappingTarget Subject subject);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void mapSubjectFromUpdateRecord(SubjectUpdateDTO dto, @MappingTarget Subject subject);
+    public void mapSubjectFromUpdateRecord(SubjectUpdateDTO dto, @MappingTarget Subject subject);
 
 }
 

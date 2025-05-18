@@ -11,5 +11,5 @@ import com.elementary.mx.elementary.model.Score;
 @Mapper(componentModel = "spring")
 public interface ScoreMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateScoreFromRecord(ScoreCreateDTO dto, @MappingTarget Score score);
+    public void updateScoreFromRecord(ScoreCreateDTO dto, @MappingTarget Score score);
 }

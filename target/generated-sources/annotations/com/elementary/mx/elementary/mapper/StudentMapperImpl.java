@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-18T10:17:53-0600",
+    date = "2025-05-18T16:15:55-0600",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -20,20 +20,20 @@ public class StudentMapperImpl implements StudentMapper {
             return;
         }
 
-        if ( dto.email() != null ) {
-            student.setEmail( dto.email() );
+        if ( dto.getEmail() != null ) {
+            student.setEmail( dto.getEmail() );
         }
-        if ( dto.enrollment() != null ) {
-            student.setEnrollment( dto.enrollment() );
+        if ( dto.getEnrollment() != null ) {
+            student.setEnrollment( dto.getEnrollment() );
         }
-        if ( dto.grade() != null ) {
-            student.setGrade( dto.grade() );
+        if ( dto.getGrade() != null ) {
+            student.setGrade( dto.getGrade() );
         }
-        if ( dto.lastName() != null ) {
-            student.setLastName( dto.lastName() );
+        if ( dto.getLastName() != null ) {
+            student.setLastName( dto.getLastName() );
         }
-        if ( dto.name() != null ) {
-            student.setName( dto.name() );
+        if ( dto.getName() != null ) {
+            student.setName( dto.getName() );
         }
     }
 

@@ -5,16 +5,20 @@ import java.sql.Date;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-public record ScoreUpdateDTO(
-    Integer scoreId,
+@Getter
+@Setter
+public class ScoreUpdateDTO{
+    private Integer scoreId;
     @Size(min = 10, max = 10)
-    String enrollment,
+    private String enrollment;
     @Size(min = 5, max = 150)
-    String subjectName,
+    private String subjectName;
     @Min(0)
     @Max(100)
-    int score,
-    Date startDate,
-    Date endDate) 
-{}
+    private int score;
+    private  Date startDate;
+    private Date endDate; 
+}

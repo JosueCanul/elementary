@@ -6,17 +6,23 @@ import com.elementary.mx.elementary.model.Student;
 import com.elementary.mx.elementary.model.Subject;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-public record ScoreCreateDTO(
-    Integer scoreId,
+@Getter
+@Setter
+@AllArgsConstructor
+public class ScoreCreateDTO{
+    Integer scoreId;
     @NotNull
-    Student student,
+    Student student;
     @NotNull
-    Subject subject,
+    Subject subject;
     @NotNull
-    int score,
+    int score;
     @NotNull
-    Date startDate,
+    Date startDate;
     @NotNull
-    Date endDate) 
-{}
+    Date endDate;
+}

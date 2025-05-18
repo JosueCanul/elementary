@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.elementary.mx.elementary.DTO.SubjectDTO;
+import com.elementary.mx.elementary.DTO.body.SubjectBodyDTO;
+import com.elementary.mx.elementary.DTO.update.SubjectUpdateDTO;
 import com.elementary.mx.elementary.mapper.SubjectMapper;
 import com.elementary.mx.elementary.model.Subject;
 import com.elementary.mx.elementary.repository.SubjectRepository;
@@ -21,9 +22,9 @@ public class SubjectService {
     @Autowired
     private SubjectMapper subjectMapper;
     
-    public Subject createSubject(SubjectDTO subjectDTO){
+    public Subject createSubject(SubjectBodyDTO subjectDTO){
         Subject subject = new Subject();
-        this.subjectMapper.updateSubjectFromRecord(subjectDTO, subject);
+        this.subjectMapper.mapSubjectFromBodyRecord(subjectDTO, subject);
         return this.subjectRepository.save(subject);
     }
 
@@ -37,9 +38,9 @@ public class SubjectService {
         return this.subjectRepository.findAll();
     }
 
-    public Subject updateSubject(SubjectDTO subjectDTO, String id) throws EntityNotFoundException{
+    public Subject updateSubject(SubjectUpdateDTO subjectDTO, String id) throws EntityNotFoundException{
         Subject subjectTosave = findSubjectById(id);
-        this.subjectMapper.updateSubjectFromRecord(subjectDTO, subjectTosave);
+        this.subjectMapper.mapSubjectFromUpdateRecord(subjectDTO, subjectTosave);
         return this.subjectRepository.save(subjectTosave);
     }
 

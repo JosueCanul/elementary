@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ElementaryApplication<elementary>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.elementary.mx.elementary.ElementaryApplication",
+            "projectName": "elementary",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

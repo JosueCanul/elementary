@@ -5,11 +5,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import com.elementary.mx.elementary.DTO.StudentDTO;
+import com.elementary.mx.elementary.DTO.body.StudentBodyDTO;
+import com.elementary.mx.elementary.DTO.update.StudentUpdateDTO;
 import com.elementary.mx.elementary.model.Student;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateStudentFromRecord(StudentDTO dto, @MappingTarget Student student);
+    void mapStudentFromBodyRecord(StudentBodyDTO dto, @MappingTarget Student student);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void mapStudentFromUpdateRecord(StudentUpdateDTO dto, @MappingTarget Student student);
 }

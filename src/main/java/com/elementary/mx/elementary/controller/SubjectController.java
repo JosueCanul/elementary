@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.elementary.mx.elementary.DTO.SubjectDTO;
+import com.elementary.mx.elementary.DTO.body.SubjectBodyDTO;
+import com.elementary.mx.elementary.DTO.update.SubjectUpdateDTO;
 import com.elementary.mx.elementary.model.Subject;
 import com.elementary.mx.elementary.service.SubjectService;
 
@@ -30,7 +31,7 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @PostMapping
-    public ResponseEntity<Subject> createSubject(@Valid @RequestBody SubjectDTO subjectDTO){
+    public ResponseEntity<Subject> createSubject(@Valid @RequestBody SubjectBodyDTO subjectDTO){
         Subject subject = this.subjectService.createSubject(subjectDTO);
         return new ResponseEntity<Subject>(subject, HttpStatus.CREATED);
     }
@@ -48,7 +49,7 @@ public class SubjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Subject> updateSubject (@Valid @RequestBody SubjectDTO subjectDTO, @PathVariable String id){
+    public ResponseEntity<Subject> updateSubject (@Valid @RequestBody SubjectUpdateDTO subjectDTO, @PathVariable String id) throws EntityNotFoundException{
         Subject subject = this.subjectService.updateSubject(subjectDTO, id);
         return new ResponseEntity<Subject>(subject, HttpStatus.OK);
     }

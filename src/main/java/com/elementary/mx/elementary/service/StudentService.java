@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.elementary.mx.elementary.DTO.StudentDTO;
+import com.elementary.mx.elementary.DTO.body.StudentBodyDTO;
+import com.elementary.mx.elementary.DTO.update.StudentUpdateDTO;
 import com.elementary.mx.elementary.mapper.StudentMapper;
 import com.elementary.mx.elementary.model.Student;
 import com.elementary.mx.elementary.repository.StudentRepository;
@@ -21,9 +22,10 @@ public class StudentService {
     @Autowired
     private StudentMapper studentMapper;
 
-    public Student createStudent(StudentDTO studentDTO){
+    public Student createStudent(StudentBodyDTO studentDTO){
         Student student = new Student();
-        this.studentMapper.updateStudentFromRecord(studentDTO, student);
+        this.studentMapper.mapStudentFromBodyRecord(studentDTO, student);
+        System.out.println(student.toString());
         return this.studentRepository.save(student);
     }
 
@@ -37,10 +39,9 @@ public class StudentService {
         return this.studentRepository.findAll();
     }
 
-    public Student updateStudent(String id, StudentDTO studentDTO) throws EntityNotFoundException{
-
+    public Student updateStudent(String id, StudentUpdateDTO studentDTO) throws EntityNotFoundException{
         Student studentToSave = findStudentById(id);
-        this.studentMapper.updateStudentFromRecord(studentDTO, studentToSave);
+        this.studentMapper.mapStudentFromUpdateRecord(studentDTO, studentToSave);
         return this.studentRepository.save(studentToSave);
     }
 

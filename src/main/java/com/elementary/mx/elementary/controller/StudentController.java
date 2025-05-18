@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.elementary.mx.elementary.DTO.StudentDTO;
+import com.elementary.mx.elementary.DTO.body.StudentBodyDTO;
+import com.elementary.mx.elementary.DTO.update.StudentUpdateDTO;
 import com.elementary.mx.elementary.model.Student;
 import com.elementary.mx.elementary.service.StudentService;
 
@@ -33,7 +34,7 @@ public class StudentController {
     private StudentService studentService;
     
     @PostMapping
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentDTO data) {
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentBodyDTO data) {
         Student student = studentService.createStudent(data);
         return new ResponseEntity<Student>(student, HttpStatus.CREATED);
     }
@@ -51,7 +52,7 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable String id, @Valid @RequestBody StudentDTO studentDTO) throws EntityNotFoundException{
+    public ResponseEntity<Student> updateStudent(@PathVariable String id, @Valid @RequestBody StudentUpdateDTO studentDTO) throws EntityNotFoundException{
         Student student = studentService.updateStudent(id, studentDTO);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
     }

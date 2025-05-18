@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 @SuppressWarnings("")
 public class ErrorHandler {
 
+     
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleError404(){
@@ -20,6 +21,7 @@ public class ErrorHandler {
     @ExceptionHandler(IncompatibleGradeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handleError400(){
+        System.out.println("The grades must match.");
     }
 
 }

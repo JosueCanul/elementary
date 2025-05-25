@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.elementary.mx.elementary.DTO.body.StudentBodyDTO;
 import com.elementary.mx.elementary.DTO.update.StudentUpdateDTO;
-import com.elementary.mx.elementary.mapper.StudentMapper;
 import com.elementary.mx.elementary.model.Student;
 import com.elementary.mx.elementary.repository.StudentRepository;
 
@@ -19,19 +18,14 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
     
-    @Autowired
-    private StudentMapper studentMapper;
-
     public Student createStudent(StudentBodyDTO studentDTO){
-        Student student = new Student();
-        this.studentMapper.mapStudentFromBodyRecord(studentDTO, student);
-        System.out.println(student.toString());
+        Student student = createStudentFromDTO(studentDTO);
         return this.studentRepository.save(student);
     }
 
-    public Student findStudentById(String id) throws EntityNotFoundException{
+    public Student findStudentByEnrollment(String enrollment) throws EntityNotFoundException{
         return this.studentRepository
-                .findById(id)
+                .findByEnrollment(enrollment)
                 .orElseThrow(EntityNotFoundException::new);
     }
     
@@ -39,17 +33,30 @@ public class StudentService {
         return this.studentRepository.findAll();
     }
 
-    public Student updateStudent(String id, StudentUpdateDTO studentDTO) throws EntityNotFoundException{
-        Student studentToSave = findStudentById(id);
-        this.studentMapper.mapStudentFromUpdateRecord(studentDTO, studentToSave);
+    public Student updateStudent(String enrollment, StudentUpdateDTO studentDTO) throws EntityNotFoundException{
+        Student studentToSave = findStudentByEnrollment(enrollment);
+        updateStudentFromDTO(studentToSave, studentDTO);
         return this.studentRepository.save(studentToSave);
     }
 
     public void deleteStudentById(String enrollment){
-        this.studentRepository.deleteById(enrollment);
+        this.studentRepository.deleteByEnrollment(enrollment);
     }
 
+    private Student createStudentFromDTO(StudentBodyDTO studentDTO){
+        return new Student( 
+            studentDTO.getEnrollment(),
+            studentDTO.getName(),
+            studentDTO.getLastName(), 
+            studentDTO.getGrade(), 
+            studentDTO.getEmail());
+    }
 
-
+    private void updateStudentFromDTO(Student student, StudentUpdateDTO dto){
+        student.setEmail(dto.getEmail());
+        student.setGrade(dto.getGrade());
+        student.setLastName(dto.getLastName());
+        student.setName(dto.getName());
+    }
 
 }

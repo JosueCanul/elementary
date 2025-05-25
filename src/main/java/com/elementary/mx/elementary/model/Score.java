@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,19 +23,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "score_table")
+@Table( name = "score_table",
+        uniqueConstraints = @UniqueConstraint( 
+                                                name="score_unique", 
+                                                columnNames = { "enrollment", 
+                                                                "subject_name", 
+                                                                "start_date", 
+                                                                "end_date"}))
 public class Score {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "score_id")
+    @Column(name = "id")
     private Integer scoreId;
 
     @ManyToOne
-    @JoinColumn(name = "enrollment", columnDefinition = "CHAR(10)")
+    @JoinColumn(name = "id_student")
     private Student student;
     
     @ManyToOne
-    @JoinColumn(name = "subject_name")
+    @JoinColumn(name = "id_subject")
     private Subject subject;
 
     @Column(name = "score")
@@ -44,7 +51,15 @@ public class Score {
     @Temporal(TemporalType.DATE)
     private Date startDate;
 
-    @Column(name = "final_date")
+    @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+
+    public Score(int score, Date startDate, Date endDate) {
+        this.score = score;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    
 }

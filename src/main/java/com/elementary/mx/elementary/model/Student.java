@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -23,9 +25,11 @@ import lombok.ToString;
 @ToString
 @Table(name = "student_table")
 public class Student {
-
     @Id
-    @Column(name =  "enrollment", length = 10, nullable = false, columnDefinition = "CHAR(10)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
+    @Column(name =  "enrollment", unique = true, length = 10, nullable = false, columnDefinition = "CHAR(10)")
     @Size(min = 10, max = 10)    
     private String enrollment;
 
@@ -43,4 +47,15 @@ public class Student {
     @Column(length = 255)
     private String email;
 
+    public Student(@Size(min = 10, max = 10) String enrollment, String name, String lastName, Grade grade,
+            @Email String email) {
+        this.enrollment = enrollment;
+        this.name = name;
+        this.lastName = lastName;
+        this.grade = grade;
+        this.email = email;
+    }
+
+
+    
 }

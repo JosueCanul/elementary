@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,9 +21,13 @@ import lombok.Setter;
 @Setter
 @Table(name = "subject_table")
 public class Subject {
-    
+
     @Id
-    @Column(name = "subject_name")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+    
+    @Column(name = "subject_name", unique = true)
     private String subjectName;
     
     @Column(name = "description", length = 200)
@@ -30,4 +36,12 @@ public class Subject {
     @Column(name = "grade")
     @Enumerated(EnumType.STRING)
     private Grade grade;
+
+    public Subject(String subjectName, String description, Grade grade) {
+        this.subjectName = subjectName;
+        this.description = description;
+        this.grade = grade;
+    }
+
+    
 }

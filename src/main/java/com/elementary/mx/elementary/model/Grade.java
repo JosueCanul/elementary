@@ -19,12 +19,12 @@ public enum Grade {
 
     @JsonValue
     public String toJson() {
-        return this.name(); // Devuelve "SECOND", "THIRD", etc.
+        return this.name();
     }
 
     @JsonCreator
     public static Grade fromJson(String value) {
-        return Grade.valueOf(value); // Convierte "SECOND" en Grade.SECOND
+        return Grade.valueOf(value); 
     }
 
     public int getGrade() {

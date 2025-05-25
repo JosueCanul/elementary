@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
+@CrossOrigin(origins ="*")
 @RequestMapping("/student")
 public class StudentController {
 
@@ -40,8 +42,8 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> findStudentById(@PathVariable String id) throws EntityNotFoundException{
-        Student student = studentService.findStudentById(id);
+    public ResponseEntity<Student> findStudentById(@PathVariable String enrollment) throws EntityNotFoundException{
+        Student student = studentService.findStudentByEnrollment(enrollment);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
     
@@ -52,8 +54,8 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable String id, @Valid @RequestBody StudentUpdateDTO studentDTO) throws EntityNotFoundException{
-        Student student = studentService.updateStudent(id, studentDTO);
+    public ResponseEntity<Student> updateStudent(@PathVariable String enrollment, @Valid @RequestBody StudentUpdateDTO studentDTO) throws EntityNotFoundException{
+        Student student = studentService.updateStudent(enrollment, studentDTO);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
     

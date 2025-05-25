@@ -14,7 +14,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ScoreCreateDTO{
-    Integer scoreId;
     @NotNull
     Student student;
     @NotNull

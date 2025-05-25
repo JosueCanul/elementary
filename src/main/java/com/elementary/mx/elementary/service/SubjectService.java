@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.elementary.mx.elementary.DTO.body.SubjectBodyDTO;
 import com.elementary.mx.elementary.DTO.update.SubjectUpdateDTO;
-import com.elementary.mx.elementary.mapper.SubjectMapper;
 import com.elementary.mx.elementary.model.Subject;
 import com.elementary.mx.elementary.repository.SubjectRepository;
 
@@ -18,19 +17,15 @@ public class SubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;
-
-    @Autowired
-    private SubjectMapper subjectMapper;
     
     public Subject createSubject(SubjectBodyDTO subjectDTO){
-        Subject subject = new Subject();
-        this.subjectMapper.mapSubjectFromBodyRecord(subjectDTO, subject);
+        Subject subject = createSubjectFromDTO(subjectDTO);
         return this.subjectRepository.save(subject);
     }
 
     public Subject findSubjectById(String id) throws EntityNotFoundException{
         return this.subjectRepository
-                        .findById(id)
+                        .findBySubjectName(id)
                         .orElseThrow(EntityNotFoundException::new);
     }
     
@@ -40,13 +35,22 @@ public class SubjectService {
 
     public Subject updateSubject(SubjectUpdateDTO subjectDTO, String id) throws EntityNotFoundException{
         Subject subjectTosave = findSubjectById(id);
-        this.subjectMapper.mapSubjectFromUpdateRecord(subjectDTO, subjectTosave);
+        updateSubjectFromDTO(subjectTosave, subjectDTO);
         return this.subjectRepository.save(subjectTosave);
     }
 
-    public void deleteSubjectById(String id) {
-        this.subjectRepository.deleteById(id);
+    public void deleteSubjectBySubjectName(String subjectName) {
+        this.subjectRepository.deleteBySubjectName(subjectName);
     }
 
-    
+    private Subject createSubjectFromDTO(SubjectBodyDTO subjectDTO){
+        return new Subject(
+            subjectDTO.getSubjectName(), 
+            subjectDTO.getDescription(), 
+            subjectDTO.getGrade());
+    }
+    private void updateSubjectFromDTO(Subject subject, SubjectUpdateDTO dto){
+        subject.setDescription(dto.getDescription());
+        subject.setGrade(dto.getGrade());
+    }
 }

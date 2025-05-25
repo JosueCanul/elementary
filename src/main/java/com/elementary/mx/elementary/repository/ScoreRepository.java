@@ -26,6 +26,7 @@ public interface ScoreRepository extends JpaRepository<Score, Integer>{
     @Query(
         value = """
                 SELECT 
+                score_table.id AS id,
                 enrollment,
                 start_date AS startDate,
                 end_date AS endDate, 

@@ -1,6 +1,6 @@
 package com.elementary.mx.elementary.DTO.record;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
-public record MatchScore(Integer studentId, Integer subjectId, Date startDate, Date endDate) {
+public record MatchScore(Integer studentId, Integer subjectId, LocalDate startDate, LocalDate endDate) {
 }

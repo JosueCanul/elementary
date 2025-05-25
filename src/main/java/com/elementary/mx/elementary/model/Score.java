@@ -1,6 +1,8 @@
 package com.elementary.mx.elementary.model;
 
-import java.sql.Date;
+
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,13 +51,13 @@ public class Score {
 
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
-    private Date endDate;
+    private LocalDate endDate;
 
-    public Score(int score, Date startDate, Date endDate) {
+    public Score(int score, LocalDate startDate, LocalDate endDate) {
         this.score = score;
         this.startDate = startDate;
         this.endDate = endDate;

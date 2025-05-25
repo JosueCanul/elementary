@@ -20,18 +20,23 @@ public interface ScoreRepository extends JpaRepository<Score, Integer> {
     Long countInstance(
             Integer studentId, Integer subjectId, LocalDate startDate, LocalDate endDate);
 
-    @Query(value = """
-            SELECT
-            score_table.id AS id,
-            enrollment,
-            start_date AS startDate,
-            end_date AS endDate,
-            score AS score,
-            subject_name AS subjectName
-            FROM student_table
-            JOIN score_table ON student_table.id = score_table.id_student
-            JOIN subject_table ON score_table.id_subject = subject_table.id
-            """, nativeQuery = true)
+
+
+    @Query(
+        value = """
+                SELECT 
+                score_table.id AS scoreId,
+                enrollment,
+                start_date AS startDate,
+                end_date AS endDate, 
+                score AS score,
+                subject_name AS subjectName
+                FROM student_table 
+                JOIN score_table ON student_table.id = score_table.id_student
+                JOIN subject_table ON score_table.id_subject = subject_table.id
+                """,
+        nativeQuery = true
+    )
     List<Map<String, Object>> findAllSimplified();
 
 }

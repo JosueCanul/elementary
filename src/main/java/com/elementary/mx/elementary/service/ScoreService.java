@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.elementary.mx.elementary.DTO.body.ScoreBodyDTO;
 import com.elementary.mx.elementary.DTO.update.ScoreUpdateDTO;
+import com.elementary.mx.elementary.exception.DuplicatedScoreRecordException;
 import com.elementary.mx.elementary.exception.IncompatibleGradeException;
 import com.elementary.mx.elementary.model.Score;
 import com.elementary.mx.elementary.model.Student;
@@ -27,13 +28,16 @@ public class ScoreService {
     @Autowired
     private SubjectService subjectService;
 
-    public Score createScore(ScoreBodyDTO scoreDTO) throws IncompatibleGradeException{
+    public Score createScore(ScoreBodyDTO scoreDTO) throws IncompatibleGradeException, DuplicatedScoreRecordException{
         Student student = this.studentService.findStudentByEnrollment(scoreDTO.getEnrollment());
         Subject subject = this.subjectService.findSubjectById(scoreDTO.getSubjectName());
-        if (!student.getGrade().equals(subject.getGrade())) {
-            throw new IncompatibleGradeException();
-        }
-        Score score = new Score(scoreDTO.getScore(), scoreDTO.getStartDate(), scoreDTO.getEndDate());
+        validateGradeRule(student, subject);
+        validateUniqueScoreRule(scoreDTO, student, subject);
+        
+        Score score = new Score(
+            scoreDTO.getScore(), 
+            scoreDTO.getStartDate(), 
+            scoreDTO.getEndDate());
         score.setStudent(student);
         score.setSubject(subject);
         return this.scoreRepository.save(score);
@@ -52,6 +56,7 @@ public class ScoreService {
     public Score updateScore(int id, ScoreUpdateDTO scoreDTO){
         Student student = this.studentService.findStudentByEnrollment(scoreDTO.getEnrollment());
         Subject subject = this.subjectService.findSubjectById(scoreDTO.getSubjectName());
+        
         Score score = this.findScoreById(id);
 
         score.setScore(scoreDTO.getScore());
@@ -66,5 +71,17 @@ public class ScoreService {
         this.scoreRepository.deleteById(id);
     }
 
+    private void validateGradeRule(Student student, Subject subject){
+        if (!student.getGrade().equals(subject.getGrade())) {
+            throw new IncompatibleGradeException();
+        }
+    }
 
+    private void validateUniqueScoreRule(ScoreBodyDTO scoreDTO, Student student, Subject subject) throws DuplicatedScoreRecordException{
+        Long instanceScore  = this.scoreRepository.countInstance(
+            student.getId(), subject.getId(), scoreDTO.getStartDate(), scoreDTO.getEndDate());
+        if (instanceScore > 0) {
+            throw new DuplicatedScoreRecordException();
+        }
+    }
 }

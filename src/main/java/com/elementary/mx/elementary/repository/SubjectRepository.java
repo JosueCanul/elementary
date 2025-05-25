@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.elementary.mx.elementary.model.Grade;
@@ -16,4 +17,9 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer>{
     Optional<Subject> findBySubjectName(String subjectName);
 
     void deleteBySubjectName(String subjectName);
+
+    @Query(value="""
+            SELECT subject_name FROM subject_table
+            """, nativeQuery=true)
+    List<String> findAllSubjectsNames();
 }

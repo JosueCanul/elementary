@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.elementary.mx.elementary.DTO.body.ScoreBodyDTO;
 import com.elementary.mx.elementary.DTO.update.ScoreUpdateDTO;
+import com.elementary.mx.elementary.exception.DuplicatedScoreRecordException;
 import com.elementary.mx.elementary.exception.IncompatibleGradeException;
 import com.elementary.mx.elementary.model.Score;
 import com.elementary.mx.elementary.service.ScoreService;
@@ -34,7 +35,7 @@ public class ScoreController {
     private ScoreService scoreService;
 
     @PostMapping
-    public ResponseEntity<Score> createScore(@Valid @RequestBody ScoreBodyDTO scoreBodyDTO) throws IncompatibleGradeException{
+    public ResponseEntity<Score> createScore(@Valid @RequestBody ScoreBodyDTO scoreBodyDTO) throws IncompatibleGradeException, DuplicatedScoreRecordException{
         Score score = this.scoreService.createScore(scoreBodyDTO);
         return new ResponseEntity<Score>(score, HttpStatus.CREATED);
     }

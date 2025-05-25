@@ -26,8 +26,8 @@ import lombok.Setter;
 @Table( name = "score_table",
         uniqueConstraints = @UniqueConstraint( 
                                                 name="score_unique", 
-                                                columnNames = { "enrollment", 
-                                                                "subject_name", 
+                                                columnNames = { "id_student", 
+                                                                "id_subject", 
                                                                 "start_date", 
                                                                 "end_date"}))
 public class Score {

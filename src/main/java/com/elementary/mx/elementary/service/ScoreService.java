@@ -67,13 +67,6 @@ public class ScoreService {
         
         Score score = this.findScoreById(id);
         
-        MatchScore matchScore = new MatchScore(
-            student.getId(),
-            subject.getId(),
-            scoreDTO.getStartDate(),
-            scoreDTO.getEndDate()
-        );
-        validateUniqueScoreRule(matchScore);
         
         score.setScore(scoreDTO.getScore());
         score.setEndDate(scoreDTO.getEndDate());

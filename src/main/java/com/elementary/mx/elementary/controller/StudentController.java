@@ -41,7 +41,7 @@ public class StudentController {
         return new ResponseEntity<Student>(student, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{enrollment}")
     public ResponseEntity<Student> findStudentById(@PathVariable String enrollment) throws EntityNotFoundException{
         Student student = studentService.findStudentByEnrollment(enrollment);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
@@ -53,7 +53,7 @@ public class StudentController {
         return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{enrollment}")
     public ResponseEntity<Student> updateStudent(@PathVariable String enrollment, @Valid @RequestBody StudentUpdateDTO studentDTO) throws EntityNotFoundException{
         Student student = studentService.updateStudent(enrollment, studentDTO);
         return new ResponseEntity<Student>(student, HttpStatus.OK);

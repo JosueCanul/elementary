@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.elementary.mx.elementary.DTO.body.SubjectBodyDTO;
 import com.elementary.mx.elementary.DTO.update.SubjectUpdateDTO;
@@ -13,6 +14,7 @@ import com.elementary.mx.elementary.repository.SubjectRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
+@Transactional
 public class SubjectService {
 
     @Autowired

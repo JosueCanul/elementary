@@ -1,6 +1,7 @@
 package com.elementary.mx.elementary.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,13 +48,13 @@ public class ScoreController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Score>> findAllScores() throws EntityNotFoundException{
-        List<Score> scores = this.scoreService.findAll();
-        return new ResponseEntity<List<Score>>(scores, HttpStatus.OK);
+    public ResponseEntity<List<Map<String,Object>>> findAllScores() throws EntityNotFoundException{
+        List<Map<String,Object>> scores = this.scoreService.findAll();
+        return new ResponseEntity<List<Map<String,Object>>>(scores, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Score> updateScore(@PathVariable int id, @Valid @RequestBody ScoreUpdateDTO scoreDTO) throws EntityNotFoundException{
+    public ResponseEntity<Score> updateScore(@PathVariable int id, @Valid @RequestBody ScoreUpdateDTO scoreDTO) throws EntityNotFoundException, DuplicatedScoreRecordException{
         Score score = this.scoreService.updateScore(id, scoreDTO);
         return new ResponseEntity<Score>(score, HttpStatus.OK);
     }

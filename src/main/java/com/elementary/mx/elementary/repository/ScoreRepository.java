@@ -1,6 +1,8 @@
 package com.elementary.mx.elementary.repository;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +22,21 @@ public interface ScoreRepository extends JpaRepository<Score, Integer>{
         Integer studentId, Integer subjectId, Date startDate, Date endDate
     );
 
+
+    @Query(
+        value = """
+                SELECT 
+                enrollment,
+                start_date AS startDate,
+                end_date AS endDate, 
+                score AS score,
+                subject_name AS subjectName
+                FROM student_table 
+                JOIN score_table ON student_table.id = score_table.id_student
+                JOIN subject_table ON score_table.id_subject = subject_table.id
+                """,
+        nativeQuery = true
+    )
+    List<Map<String, Object>> findAllSimplified();
 
 }

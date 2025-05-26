@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.elementary.mx.elementary.model.Score;
+import com.elementary.mx.elementary.model.Student;
+import com.elementary.mx.elementary.model.Subject;
 
 public interface ScoreRepository extends JpaRepository<Score, Integer> {
     @Query(value = """
@@ -38,5 +40,7 @@ public interface ScoreRepository extends JpaRepository<Score, Integer> {
         nativeQuery = true
     )
     List<Map<String, Object>> findAllSimplified();
+    List<Score> findAllByStudent(Student student);
+    List<Score> findAllBySubject(Subject subject);
 
 }

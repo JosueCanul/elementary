@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.elementary.mx.elementary.model.IrregularStudent;
 import com.elementary.mx.elementary.model.Student;
 import com.elementary.mx.elementary.service.StudentScoresService;
+import com.elementary.mx.elementary.service.StudentsListService;
 import com.elementary.mx.elementary.service.SubjectScoresService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -28,6 +30,8 @@ public class ReportsController {
     private StudentScoresService studentScoresService;
     @Autowired
     private SubjectScoresService subjectScoresService;
+    @Autowired
+    private StudentsListService studentsListService;
 
 
     @GetMapping("/student/{enrollment}")
@@ -44,12 +48,14 @@ public class ReportsController {
 
     @GetMapping("/regular")
     public ResponseEntity<List<Student>> getRegularStudents() throws EntityNotFoundException{
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Student> studentsList = studentsListService.getRegularStudents();
+        return new ResponseEntity<List<Student>>(studentsList, HttpStatus.OK);
     }
 
     @GetMapping("/irregular")
-    public ResponseEntity<List<Student>> getIrregularStudents( ) throws EntityNotFoundException{
-        return new ResponseEntity<>(HttpStatus.OK);
+    public  ResponseEntity<Map<String, List<IrregularStudent>>> getIrregularStudents( ) throws EntityNotFoundException{
+         Map<String, List<IrregularStudent>> irregularStudentsReport = studentsListService.getIrregularStudents();
+        return new ResponseEntity<Map<String, List<IrregularStudent>>>(irregularStudentsReport, HttpStatus.OK);
     }
 
 

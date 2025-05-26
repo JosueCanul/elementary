@@ -43,4 +43,6 @@ public interface ScoreRepository extends JpaRepository<Score, Integer> {
     List<Score> findAllByStudent(Student student);
     List<Score> findAllBySubject(Subject subject);
 
+    List<Score> findByScoreGreaterThan(int score);
+    List<Score> findByScoreLessThan(int score);
 }

@@ -43,8 +43,8 @@ public class StudentScoresService {
         long averageGrade = 0;
         int numberOfGrades = 0;
         for (Score score : scoresList) {
-            averageGrade =+ score.getScore();
-            numberOfGrades =+ 1;
+            averageGrade += score.getScore();
+            numberOfGrades += 1;
         }
         averageGrade = averageGrade / numberOfGrades;
         return averageGrade;

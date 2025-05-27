@@ -1,12 +1,15 @@
 package com.elementary.mx.elementary.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.elementary.mx.elementary.DTO.body.ScoreBodyDTO;
+import com.elementary.mx.elementary.DTO.record.MatchScore;
 import com.elementary.mx.elementary.DTO.update.ScoreUpdateDTO;
+import com.elementary.mx.elementary.exception.DuplicatedScoreRecordException;
 import com.elementary.mx.elementary.exception.IncompatibleGradeException;
 import com.elementary.mx.elementary.model.Score;
 import com.elementary.mx.elementary.model.Student;
@@ -27,13 +30,22 @@ public class ScoreService {
     @Autowired
     private SubjectService subjectService;
 
-    public Score createScore(ScoreBodyDTO scoreDTO) throws IncompatibleGradeException{
+    public Score createScore(ScoreBodyDTO scoreDTO) throws IncompatibleGradeException, DuplicatedScoreRecordException{
         Student student = this.studentService.findStudentByEnrollment(scoreDTO.getEnrollment());
         Subject subject = this.subjectService.findSubjectById(scoreDTO.getSubjectName());
-        if (!student.getGrade().equals(subject.getGrade())) {
-            throw new IncompatibleGradeException();
-        }
-        Score score = new Score(scoreDTO.getScore(), scoreDTO.getStartDate(), scoreDTO.getEndDate());
+        MatchScore matchScore = new MatchScore(
+            student.getId(),
+            subject.getId(),
+            scoreDTO.getStartDate(),
+            scoreDTO.getEndDate()
+        );
+        validateGradeRule(student, subject);
+        validateUniqueScoreRule(matchScore);
+        
+        Score score = new Score(
+            scoreDTO.getScore(), 
+            scoreDTO.getStartDate(), 
+            scoreDTO.getEndDate());
         score.setStudent(student);
         score.setSubject(subject);
         return this.scoreRepository.save(score);
@@ -45,15 +57,17 @@ public class ScoreService {
                         .orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<Score> findAll(){
-        return this.scoreRepository.findAll();
+    public List<Map<String, Object>> findAll(){
+        return this.scoreRepository.findAllSimplified();
     }
 
-    public Score updateScore(int id, ScoreUpdateDTO scoreDTO){
+    public Score updateScore(int id, ScoreUpdateDTO scoreDTO) throws DuplicatedScoreRecordException{
         Student student = this.studentService.findStudentByEnrollment(scoreDTO.getEnrollment());
         Subject subject = this.subjectService.findSubjectById(scoreDTO.getSubjectName());
+        
         Score score = this.findScoreById(id);
-
+        
+        
         score.setScore(scoreDTO.getScore());
         score.setEndDate(scoreDTO.getEndDate());
         score.setStartDate(scoreDTO.getStartDate());
@@ -66,5 +80,17 @@ public class ScoreService {
         this.scoreRepository.deleteById(id);
     }
 
+    private void validateGradeRule(Student student, Subject subject){
+        if (!student.getGrade().equals(subject.getGrade())) {
+            throw new IncompatibleGradeException();
+        }
+    }
 
+    private void validateUniqueScoreRule(MatchScore matchScore) throws DuplicatedScoreRecordException{
+        Long instanceScore  = this.scoreRepository.countInstance(
+            matchScore.studentId(), matchScore.subjectId(), matchScore.startDate(), matchScore.endDate());
+        if (instanceScore > 0) {
+            throw new DuplicatedScoreRecordException();
+        }
+    }
 }

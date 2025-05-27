@@ -1,6 +1,6 @@
 package com.elementary.mx.elementary.DTO.update;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,6 +19,6 @@ public class ScoreUpdateDTO{
     @Min(0)
     @Max(100)
     private int score;
-    private  Date startDate;
-    private Date endDate; 
+    private LocalDate startDate;
+    private LocalDate endDate; 
 }

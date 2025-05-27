@@ -1,6 +1,6 @@
 package com.elementary.mx.elementary.DTO.body;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -28,7 +28,7 @@ public class ScoreBodyDTO{
     @Max(100)
     int score;
     @NotNull
-    Date startDate;
+    LocalDate startDate;
     @NotNull
-    Date endDate;
+    LocalDate endDate;
 }

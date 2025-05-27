@@ -14,14 +14,16 @@ public class ErrorHandler {
      
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleError404(){
-        System.out.println("Content not found");
+    public void handleErrorEntityNotFound(){
     }
 
     @ExceptionHandler(IncompatibleGradeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public void handleError400(){
-        System.out.println("The grades must match.");
+    public void handleErrorIncompatibleGrade(){
     }
 
+    @ExceptionHandler(DuplicatedScoreRecordException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void handleErrorDuplicatedError(){
+    }
 }
